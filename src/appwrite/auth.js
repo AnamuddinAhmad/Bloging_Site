@@ -1,16 +1,17 @@
 import config from "../config/config";
-import { ID, Client, Account, Client } from "appwrite";
+import { ID, Client, Account } from "appwrite";
 
 export class AuthService {
-  Client = new Client();
+  client = new Client();
   account;
   constructor() {
-    this.Client.setEndpoint(config.appwriteUrl).setProject(
-      config.appwriteProjectId
-    );
-    this.account = new Account(Client);
+    this.client
+      .setEndpoint(config.appwriteUrl)
+      .setProject(config.appwriteProjectId);
+    this.account = new Account(this.client);
   }
 
+  //Singup User
   async createAccount({ email, password, name }) {
     try {
       const userAccount = await this.account.create(ID, email, password, name);
@@ -49,7 +50,7 @@ export class AuthService {
     try {
       await this.account.deleteSessions();
     } catch (error) {
-      console.log("Unable to faild the error",error);
+      console.log("Unable to faild the error", error);
     }
   }
 }
