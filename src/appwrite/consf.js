@@ -110,16 +110,14 @@ export class Service {
     }
   }
 
-  //File preview 
-  async getFilePreview(fileId){
+  //File preview
+  async getFilePreview(fileId) {
     try {
-        return await this.storage.getFilePreview(config.appwriteBucketId,fileId);
+      return await this.storage.getFilePreview(config.appwriteBucketId, fileId);
     } catch (error) {
-        console.log("Faild to preview");
+      console.log("Faild to preview");
     }
   }
-
-  
 }
 
 const service = new Service();
