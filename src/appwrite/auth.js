@@ -39,8 +39,9 @@ export class AuthService {
   async getCurrentUser() {
     try {
       return await this.account.get();
+     
     } catch (error) {
-      console.log("Unable to fetch error", error);
+      console.log("Unable to fetch error appwriteServie  ", error);
     }
     return null;
   }

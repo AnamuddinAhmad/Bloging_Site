@@ -2,16 +2,16 @@ import config from "../config/config";
 import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 export class Service {
-  clint = new Client();
+  client = new Client();
   databases;
   storage;
 
   constructor() {
-    this.clint
+    this.client
       .setEndpoint(config.appwriteUrl)
       .setProject(config.appwriteProjectId);
-    this.databases = new Databases(this.clint);
-    this.storage = new Storage(this.clint);
+    this.databases = new Databases(this.client);
+    this.storage = new Storage(this.client);
   }
 
   //Create Post
@@ -24,12 +24,12 @@ export class Service {
         { title, content, featuredImage, status, userId }
       );
     } catch (error) {
-      console.error("Faild to create Post.", error);
+      console.log("Faild to create Post.", error);
     }
   }
 
   //Update Posts
-  async updatePost(sluge, { title, content, featuredImage, status }) {
+  async updatePost(sluge, { title, content, featuredImage, status, userId}) {
     try {
       return await this.databases.updateDocument(
         config.appwriteDatabaseId,
@@ -38,7 +38,7 @@ export class Service {
         { title, content, featuredImage, status, userId }
       );
     } catch (error) {
-      console.error("Faild to updatePost.", error);
+      console.log("Faild to updatePost.", error);
     }
   }
 
@@ -52,7 +52,7 @@ export class Service {
       );
       return true;
     } catch (error) {
-      console.error("Faild to delete ", error);
+      console.log("Faild to delete ", error);
       return false;
     }
   }
@@ -66,7 +66,7 @@ export class Service {
         sluge
       );
     } catch (error) {
-      console.error("Unable to fetch getPost", error);
+      console.log("Unable to fetch getPost", error);
       return false;
     }
   }
@@ -80,7 +80,7 @@ export class Service {
         queries
       );
     } catch (error) {
-      console.error("Faild to fetch All post", error);
+      console.log("Failed to fetch All post", error);
       return false;
     }
   }
@@ -94,7 +94,7 @@ export class Service {
         file
       );
     } catch (error) {
-      console.error("Faild to upload File.");
+      console.log("Faild to upload File.");
       return false;
     }
   }
@@ -105,15 +105,15 @@ export class Service {
       await this.storage.deleteFile(config.appwriteBucketId, fileId);
       return true;
     } catch (error) {
-      console.error("Faild to delete File.");
+      console.log("Faild to delete File.");
       return false;
     }
   }
 
   //File preview
-  async getFilePreview(fileId) {
+  getFilePreview(fileId) {
     try {
-      return await this.storage.getFilePreview(config.appwriteBucketId, fileId);
+      return this.storage.getFilePreview(config.appwriteBucketId, fileId);
     } catch (error) {
       console.log("Faild to preview");
     }

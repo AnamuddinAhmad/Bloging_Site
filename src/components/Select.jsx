@@ -1,6 +1,6 @@
 import React, { useId, forwardRef } from "react";
 
-export const Select = forwardRef(
+const Select = forwardRef(
   ({ options, label, className = "", ...props }, ref) => {
     const id = useId();
     return (
@@ -22,3 +22,5 @@ export const Select = forwardRef(
     );
   }
 );
+
+export default Select;
