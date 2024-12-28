@@ -12,9 +12,6 @@ const LogoutBtn = () => {
       .then(() => {
         dispatch(logout());
       })
-      .catch((error) => {
-        console.log("Throw error Logout::Btn ", error);
-      });
   };
 
   return (

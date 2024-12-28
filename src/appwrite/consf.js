@@ -15,55 +15,55 @@ export class Service {
   }
 
   //Create Post
-  async createPost({ title, sluge, content, featuredImage, status, userId }) {
+  async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
       return await this.databases.createDocument(
         config.appwriteDatabaseId,
         config.appwriteCollectionId,
-        sluge,
+        slug,
         { title, content, featuredImage, status, userId }
       );
     } catch (error) {
-      console.log("Faild to create Post.", error);
+      console.log("Failed to create Post.", error);
     }
   }
 
   //Update Posts
-  async updatePost(sluge, { title, content, featuredImage, status, userId}) {
+  async updatePost(slug, { title, content, featuredImage, status }) {
     try {
       return await this.databases.updateDocument(
         config.appwriteDatabaseId,
         config.appwriteCollectionId,
-        sluge,
-        { title, content, featuredImage, status, userId }
+        slug,
+        { title, content, featuredImage, status }
       );
     } catch (error) {
-      console.log("Faild to updatePost.", error);
+      console.log("Failed to update Post.", error);
     }
   }
 
   //Delete post
-  async deletePost(sluge) {
+  async deletePost(slug) {
     try {
       await this.databases.deleteDocument(
         config.appwriteDatabaseId,
         config.appwriteCollectionId,
-        sluge
+        slug
       );
       return true;
     } catch (error) {
-      console.log("Faild to delete ", error);
+      console.log("Failed to delete Post.", error);
       return false;
     }
   }
 
   //Get singlePost
-  async getPost(sluge) {
+  async getPost(slug) {
     try {
       return await this.databases.getDocument(
         config.appwriteDatabaseId,
         config.appwriteCollectionId,
-        sluge
+        slug
       );
     } catch (error) {
       console.log("Unable to fetch getPost", error);
@@ -72,12 +72,12 @@ export class Service {
   }
 
   //Get All posts
-  async getPosts(queries = [Query.equal("status", "active")]) {
+  async getPosts() {
     try {
       return await this.databases.listDocuments(
         config.appwriteDatabaseId,
         config.appwriteCollectionId,
-        queries
+        [Query.equal("status", "active")],
       );
     } catch (error) {
       console.log("Failed to fetch All post", error);
@@ -94,7 +94,7 @@ export class Service {
         file
       );
     } catch (error) {
-      console.log("Faild to upload File.");
+      console.log("Failed to upload File.", error);
       return false;
     }
   }
@@ -105,7 +105,7 @@ export class Service {
       await this.storage.deleteFile(config.appwriteBucketId, fileId);
       return true;
     } catch (error) {
-      console.log("Faild to delete File.");
+      console.log("Failed to delete File.", error);
       return false;
     }
   }
@@ -115,7 +115,7 @@ export class Service {
     try {
       return this.storage.getFilePreview(config.appwriteBucketId, fileId);
     } catch (error) {
-      console.log("Faild to preview");
+      console.log("Failed to preview File.", error);
     }
   }
 }

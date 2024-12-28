@@ -7,14 +7,14 @@ import { useSelector } from "react-redux";
 
 const PostForm = ({ post }) => {
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.user.useData);
-
+  const userData = useSelector((state) => state.auth.userData);
+  
   const { register, handleSubmit, watch, setValue, control, getValues } =
     useForm({
       defaultValues: {
         title: post?.title || "",
         content: post?.content || "",
-        slug: post?.slug || "",
+        slug: post?.$id || "",
         status: post?.status || "active",
       },
     });
@@ -52,12 +52,12 @@ const PostForm = ({ post }) => {
   };
 
   const slugTrasform = useCallback((value) => {
-    if (value && typeOf === "string")
+    if (value && typeof value === "string")
       return value
         .trim()
         .toLowerCase()
-        .replace(/^[a-zA-Z\d\s]+/g, "-")
-        .replace(/\s/g, "-");
+        .replace(/[^a-zA-Z\d\s]/g, "")
+        .replace(/\s+/g, "-");
 
     return "";
   }, []);
@@ -77,13 +77,13 @@ const PostForm = ({ post }) => {
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
       <div className="w-2/3 px-2">
         <Inputs
-          lable="Title"
+          label="Title"
           placeholder="Title"
           className="mb-4"
           {...register("title", { required: true })}
         />
         <Inputs
-          lable="Slug"
+          label="Slug"
           placeholder="Slug"
           className="mb-4"
           {...register("slug", { required: true })}
@@ -102,11 +102,11 @@ const PostForm = ({ post }) => {
       </div>
       <div className="w=1/3 px-2">
         <Inputs
-          lable="Featured Image"
+          label="Featured Image"
           type="file"
           className="mb-4"
           accept="image/png, image/jpeg, image/jpg, image/gif"
-          {...register("image", { reduired: !post })}
+          {...register("image", { required: !post })}
         />
 
         {post && (
@@ -119,8 +119,18 @@ const PostForm = ({ post }) => {
           </div>
         )}
         <Select
-        op
+          options={["active", "inactive"]}
+          label="Status"
+          className="mb-4"
+          {...register("status", { required: true })}
         />
+        <Button
+          type="submit"
+          bgColor={post ? "bg-green-500" : undefined}
+          className="w-full"
+        >
+          {post ? "Update" : "Submit"}
+        </Button>
       </div>
     </form>
   );

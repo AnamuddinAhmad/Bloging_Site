@@ -1,10 +1,11 @@
 import React from "react";
 import { LogoutBtn, Container, Logo } from "../index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const authStatus = useSelector((state) => state.status);
+  const authStatus = useSelector((state) => state.auth.status);
+  const navigate = useNavigate();
 
   const navItems = [
     {
@@ -46,13 +47,13 @@ const Header = () => {
           <ul className="flex ml-auto">
             {navItems.map((item) =>
               item.active ? (
-                <li key={item.slug} >
-                  <Link
-                    className="inline-block px-6 py-2 duration-200 rounded-full hover:bg-blue-100 "
-                    to={item.slug}
+                <li key={item.slug}>
+                  <button
+                    onClick={() => navigate(item.slug)}
+                    className="inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full"
                   >
                     {item.name}
-                  </Link>
+                  </button>
                 </li>
               ) : null
             )}

@@ -4,12 +4,11 @@ import appwriteService from "../appwrite/consf";
 
 const AllPosts = () => {
   const [posts, setPosts] = useState([]);
-  
-  useEffect(() => {
-    appwriteService.getPosts().then((post) => {
-      if (post) setPosts(post.documents);
-    });
-  }, [posts]);
+
+  useEffect(() => {}, []);
+  appwriteService.getPosts().then((post) => {
+    if (post) setPosts(post.documents);
+  });
 
   return (
     <div className="py-8 w-full">
@@ -18,7 +17,7 @@ const AllPosts = () => {
           {posts.map((post) => {
             return (
               <div key={post.$id} className="p-2 w-1/4">
-                <PostCard key={post.$id} post={post} />
+                <PostCard post={post} />
               </div>
             );
           })}

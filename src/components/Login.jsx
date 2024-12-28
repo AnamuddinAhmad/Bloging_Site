@@ -38,15 +38,15 @@ const Login = () => {
         </div>
         <h2 className="text-center text-2xl font-bold leading-tight ">
           {" "}
-          Sing in to your accoutn
+          Sign in to your account
         </h2>
         <p className="mt-2 text-center text-base text-black/60">
-          Don&apos;t have any accoutn? &nbsp;{" "}
+          Don&apos;t have any account? &nbsp;{" "}
           <Link
             to="/signup"
             className="font-medium text-primary transition-all duration-200 hover:underline"
           >
-            Sing up
+            Sign up
           </Link>
         </p>
         {error && <p className="text-red-600  mt-8 text-center">{error}</p>}
@@ -74,7 +74,7 @@ const Login = () => {
               })}
             />
             <Button type="submit" className="w-full">
-              Sing in
+              Sign in
             </Button>
           </div>
         </form>

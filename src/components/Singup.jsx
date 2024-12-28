@@ -15,10 +15,10 @@ const Singup = () => {
   const create = async (data) => {
     try {
       setError("");
-      const useData = await authService.createAccount(data);
-      if (useData) {
+      const userData = await authService.createAccount(data);
+      if (userData) {
         const userData = await authService.getCurrentUser();
-        if (userData) dispatch(login(useData));
+        if (userData) dispatch(login(userData));
         navigate("/");
       }
     } catch (error) {

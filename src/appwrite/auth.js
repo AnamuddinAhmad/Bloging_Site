@@ -11,18 +11,18 @@ export class AuthService {
     this.account = new Account(this.client);
   }
 
-  //Singup User
+  //Signup User
   async createAccount({ email, password, name }) {
     try {
-      const userAccount = await this.account.create(ID, email, password, name);
+      const userAccount = await this.account.create(ID.unique(), email, password, name);
       if (userAccount) {
-        //Cal another method
+        //Call another method
         return this.Login({ email, password });
       } else {
         return userAccount;
       }
     } catch (error) {
-      console.error("Faild to create Account.");
+      console.error("Failed to create Account.");
     }
   }
 
@@ -30,18 +30,20 @@ export class AuthService {
   async Login({ email, password }) {
     try {
       return await this.account.createEmailPasswordSession(email, password);
+      
     } catch (error) {
-      console.log("Faild to login");
+      console.log("Failed to login");
     }
   }
 
   //Get current user
   async getCurrentUser() {
     try {
-      return await this.account.get();
+       const user = await this.account.get();
+       return user;
      
     } catch (error) {
-      console.log("Unable to fetch error appwriteServie  ", error);
+      console.log("Unable to fetch error appwriteService :: ", error.message);
     }
     return null;
   }
@@ -51,7 +53,7 @@ export class AuthService {
     try {
       await this.account.deleteSessions();
     } catch (error) {
-      console.log("Unable to faild the error", error);
+      console.log("Failed to logout", error);
     }
   }
 }
