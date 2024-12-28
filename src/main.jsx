@@ -53,7 +53,7 @@ const router = createBrowserRouter([
           </ProtectedLayout>
         ),
       },{
-        path: "/edit-post/:slug",
+        path: "/edit/post/:slug",
         element: (
           <ProtectedLayout authentication>
             <EditPost />

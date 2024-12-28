@@ -10,6 +10,21 @@ const AllPosts = () => {
     if (post) setPosts(post.documents);
   });
 
+
+  if(posts.length === 0) {
+    return (
+      <div className="py-8 w-full">
+        <Container>
+          <div className="flex flex-wrap">
+            <div className="p-2 w-full">
+              <h1 className="text-2xl text-center">No Posts Found</h1>
+            </div>
+          </div>
+        </Container>
+      </div>
+    );
+  }
+
   return (
     <div className="py-8 w-full">
       <Container>

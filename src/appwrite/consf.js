@@ -30,6 +30,7 @@ export class Service {
 
   //Update Posts
   async updatePost(slug, { title, content, featuredImage, status }) {
+    console.log("Update post ",slug);
     try {
       return await this.databases.updateDocument(
         config.appwriteDatabaseId,

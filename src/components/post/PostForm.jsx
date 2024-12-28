@@ -5,10 +5,10 @@ import appwriteService from "../../appwrite/consf";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const PostForm = ({ post }) => {
+const PostForm = ({ posts }) => {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
-  
+  const post =posts.documents[0];
   const { register, handleSubmit, watch, setValue, control, getValues } =
     useForm({
       defaultValues: {
